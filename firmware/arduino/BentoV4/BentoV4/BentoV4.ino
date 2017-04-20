@@ -77,11 +77,18 @@ void wifiConnectingUpdate(int curTry)
     #endif
 
 }
+
+void wifiConfigSaved()
+{
+  resetESP(false);
+}
 #endif
 
 #if USE_TOUCH
 void touchUpdate(int touchID, bool touched)
 {
+  //if(wifiManager.apMode) return;
+  
   #if SERIAL_DEBUG
   Serial.print("t\t");
   Serial.print(touchID);
@@ -102,6 +109,8 @@ void touchUpdate(int touchID, bool touched)
 #if USE_IMU
 void orientationUpdate(float yaw, float pitch, float roll)
 {
+  //if(wifiManager.apMode) return;
+  
   if(millis() - lastOrientationSendTime > orientationSendRateMS)
   {
     #if SERIAL_DEBUG
@@ -141,8 +150,10 @@ void messageReceived(OSCMessage &msg)
   }else if(msg.match("/bootloader"))
   {
     resetESP(true);
-  }else
+  }else 
   {
+    if(wifiManager.handleMessage(msg)) return;
+    
     #if USE_TOUCH
     if(touchManager.handleMessage(msg)) return; 
     #endif
@@ -207,9 +218,7 @@ void resetESP(bool toBootloader)
 }
 
 //Setup & loop
-void setup() {
-
-  
+void setup() {  
   delay(500);  
 
   Wire.begin(2,4);
@@ -254,6 +263,7 @@ void setup() {
   //Wifi & OSC
   #if USE_WIFI
     wifiManager.addCallbackConnectingUpdate(&wifiConnectingUpdate);
+    wifiManager.addCallbackWifiConfigSaved(&wifiConfigSaved);
     wifiManager.init();
     
     #if USE_LEDSTRIP

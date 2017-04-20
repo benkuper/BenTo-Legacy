@@ -21,7 +21,8 @@ public:
   
   OSCManager(WiFiUDP &udp): udp(udp)
   {
-    sprintf(remoteHost,"192.168.0.100");
+    
+    sprintf(remoteHost,"192.168.0.13");
     
     addCallbackMessageReceived(&OSCManager::defaultCallback);
     
@@ -80,7 +81,7 @@ public:
        }else
        {
         #if SERIAL_DEBUG
-        Serial.print("Msg got error");
+        Serial.println("Msg got error");
         #endif
        }
      }

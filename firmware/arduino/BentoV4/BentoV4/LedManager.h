@@ -85,8 +85,11 @@ public :
       #if SERIAL_DEBUG
       Serial.println("..Led handle message");
       #endif
-      
-      setLed(msg.getFloat(0)*255,msg.getFloat(1)*255,msg.getFloat(2)*255);
+
+      if(msg.size() >= 3)
+      {
+        setLed(msg.getFloat(0)*255,msg.getFloat(1)*255,msg.getFloat(2)*255);  
+      }
       return true;
     }
 

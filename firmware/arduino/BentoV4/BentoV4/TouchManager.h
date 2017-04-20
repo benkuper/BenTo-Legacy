@@ -24,7 +24,7 @@ public :
   void init()
   {
     initValues();
-    QTouch.setAKS(!multitouchMode); //Disable Adjacent Key Suppression (allow for multitouch);
+//    QTouch.setAKS(!multitouchMode); //Disable Adjacent Key Suppression (allow for multitouch);
     setThreshold(threshold);
   }
 
@@ -77,7 +77,7 @@ public :
     if(msg.match("/touch/reset"))
     {
       QTouch.reset(); 
-      QTouch.setAKS(!multitouchMode);
+//      QTouch.setAKS(!multitouchMode);
       initValues();
       setThreshold(threshold);
       
@@ -89,14 +89,14 @@ public :
     }else if(msg.match("/touch/calibrate"))
     {
       QTouch.calibrate();
-      QTouch.setAKS(!multitouchMode);
+//      QTouch.setAKS(!multitouchMode);
       setThreshold(threshold);
       
       return true;
     }else if(msg.match("/touch/multitouch"))
     {
       multitouchMode = msg.getInt(0) != 0;
-      QTouch.setAKS(!multitouchMode); //Disable Adjacent Key Suppression (allow for multitouch);
+//      QTouch.setAKS(!multitouchMode); //Disable Adjacent Key Suppression (allow for multitouch);
       setThreshold(threshold);
       return true;
     }else if(msg.match("/touch/threshold"))
