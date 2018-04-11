@@ -1,2 +1,2 @@
 # BenTo
-Official repository for the BenTo project
+Legacy repository for the Bento Clubs
